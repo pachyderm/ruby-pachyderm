@@ -1,3 +1,0 @@
-[submodule "pachyderm"]
-	path = pachyderm
-	url = git@github.com:pachyderm/pachyderm
