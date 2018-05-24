@@ -1,0 +1,27 @@
+#!/bin/sh
+
+tar xf /dev/stdin
+
+outdir=src/python_pachyderm/
+mkdir -p $outdir
+
+for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
+    # make sure to remove the gogoproto line, as that is go specific
+    sed -i s/import.*gogo.proto.*\;// $i
+    sed -i 's/\[.*gogoproto.*\]//' $i
+    # we need to do this in a pass before compilation because it's not guaranteed we
+    # traverse the proto files in order of dependence
+done
+
+for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
+    grpc_tools_ruby_protoc -I ./proto/pachyderm/src --ruby_out=$outdir --grpc_out=$outdir ${i}; \
+done
+
+for i in $(find $outdir -maxdepth 3 -regex ".*pb2.*py"); do
+    # fix the imports so they work once this is packaged by pypi
+    sed -i 's/from client\./from python_pachyderm\.client\./' $i
+done
+
+
+find $outdir -maxdepth 3 -regex ".*pb2.*py" | xargs tar cf -
+
