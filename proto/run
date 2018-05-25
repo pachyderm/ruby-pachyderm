@@ -3,7 +3,7 @@
 tar xf /dev/stdin
 
 #directory where we want these declarations to live in the 'ruby_pachyderm' repo
-outdir=lib/ruby_pachyderm/
+outdir=lib/
 mkdir -p $outdir
 
 for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
