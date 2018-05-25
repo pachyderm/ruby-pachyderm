@@ -18,7 +18,8 @@ class TestClientConnection < Minitest::Test
 			version += "#{resp.additional}"
 		end
 		puts "version: #{version}"
-		assert_equal "1.7.3",version
+		expected_version = File.read("VERSION")
+		assert_equal expected_version,version
     end
 
     def test_unary_response
