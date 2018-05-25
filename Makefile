@@ -11,7 +11,7 @@ proto: docker-build-proto
 	| tar xf -
 
 test: 
-	echo "todo"
+	ruby -I ./lib lib/pachyderm.rb
 
 init:
 	git submodule update --init
