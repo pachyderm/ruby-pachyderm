@@ -53,11 +53,14 @@ class TestClientConnection < Minitest::Test
 		req = Pfs::CreateRepoRequest.new(:repo=>Pfs::Repo.new(:name=>"foo_#%@#^"))
 		err = nil
 		begin
-			resp, err = client.create_repo(req)
+			client.create_repo(req)
 		rescue GRPC::Unknown => e
 			err = e
 		end
 		assert_match(/repo\sname\s.*?invalid/, err.to_s)
+    end
+
+    def test_streaming_response
     end
 
     def test_pfs
@@ -67,9 +70,6 @@ class TestClientConnection < Minitest::Test
     end
 
     def test_auth
-    end
-
-    def test_streaming_response
     end
 
 end
