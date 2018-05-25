@@ -5,13 +5,14 @@ docker-build-proto:
 		docker build -t pachyderm_ruby_proto .
 
 proto: docker-build-proto
-	find ./proto/pachyderm/src/client -maxdepth 2 -regex ".*\.proto" \
+	find ./proto/pachyderm/src/client -maxdepth 7 -regex ".*\.proto" \
 	| xargs tar cf - \
 	| docker run -i pachyderm_ruby_proto \
 	| tar xf -
 
 test: 
-	ruby -I ./lib lib/pachyderm.rb
+	#	ruby -I ./lib lib/pachyderm.rb
+	ruby -I ./lib test/test.rb
 
 init:
 	git submodule update --init

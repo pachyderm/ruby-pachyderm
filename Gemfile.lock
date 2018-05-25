@@ -27,6 +27,7 @@ GEM
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
     memoist (0.16.0)
+    minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
     os (0.9.6)
@@ -43,6 +44,7 @@ PLATFORMS
 DEPENDENCIES
   grpc
   grpc-tools
+  minitest
 
 BUNDLED WITH
    1.11.2

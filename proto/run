@@ -6,7 +6,7 @@ tar xf /dev/stdin
 outdir=lib/
 mkdir -p $outdir
 
-for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
+for i in $(find ./proto/pachyderm/src/client -maxdepth 7 -name "*.proto"); do \
     # make sure to remove the gogoproto line, as that is go specific
     sed -i s/import.*gogo.proto.*\;// $i
     sed -i 's/\[.*gogoproto.*\]//' $i
@@ -14,9 +14,9 @@ for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
     # traverse the proto files in order of dependence
 done
 
-for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
+for i in $(find ./proto/pachyderm/src/client -maxdepth 7 -name "*.proto"); do \
     grpc_tools_ruby_protoc -I ./proto/pachyderm/src --ruby_out=$outdir --grpc_out=$outdir ${i}; \
 done
 
-find $outdir -maxdepth 3 -regex ".*pb.rb" | xargs tar cf -
+find $outdir -maxdepth 5 -regex ".*pb.rb" | xargs tar cf -
 
