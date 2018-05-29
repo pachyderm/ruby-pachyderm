@@ -11,7 +11,8 @@ proto: docker-build-proto
 	| tar xf -
 
 test: 
-	ruby -I ./lib test/test.rb
+	@#ruby -I ./lib test/test.rb
+	pachctl enterprise activate  $$(aws s3 cp s3://pachyderm-engineering/test_enterprise_activation_code.txt -)
 	ruby -I ./lib test/auth.rb
 
 init:
