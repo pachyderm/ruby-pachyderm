@@ -20,6 +20,7 @@ init:
 
 ci-setup:
 	@# TODO: Install any ruby / proto libs here
+	sudo pip install awscli
 	pushd proto/pachyderm && \
 		sudo ./etc/testing/ci/before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
