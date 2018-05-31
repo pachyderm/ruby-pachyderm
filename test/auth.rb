@@ -32,7 +32,8 @@ class TestClientConnection < Minitest::Test
 		end	
 
 		# Positive control - should be able to list admins
-		res = client.get_admins(Auth::GetAdminsRequest.new, {:metadata => {'authn-token' => token}})
+		metadata = Pachyderm::metadata(token)
+		res = client.get_admins(Auth::GetAdminsRequest.new, metadata)
 		refute_equal 0, res.admins.size
     end
 
