@@ -1,0 +1,13 @@
+dist: trusty
+sudo: required
+language: ruby
+rvm:
+  - 2.2
+cache: bundler
+before_install:
+  - gem update --system
+  - gem --version
+before_script:
+- make ci-setup
+script:
+  - make test

@@ -11,7 +11,7 @@ proto: docker-build-proto
 	| tar xf -
 
 test: 
-	@#ruby -I ./lib test/test.rb
+	ruby -I ./lib test/test.rb
 	pachctl enterprise activate  $$(aws s3 cp s3://pachyderm-engineering/test_enterprise_activation_code.txt -)
 	ruby -I ./lib test/auth.rb
 
@@ -20,7 +20,7 @@ init:
 
 ci-setup:
 	@# TODO: Install any ruby / proto libs here
-	bundle install
+	@# bundle install # Travis does the bundle install + caches it
 	pushd proto/pachyderm && \
 		sudo ./etc/testing/ci/before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
