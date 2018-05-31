@@ -50,6 +50,9 @@ sync:
 	make proto
 
 release:
-	# TODO: release a gem
+	@# Setup your gem credentials a la:
+	@# curl -u sean https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials; chmod 0600 ~/.gem/credentials
+	gem build pachyderm.gemspec
+	gem push pachyderm-$$(cat VERSION).gem
 
 .PHONY: test
