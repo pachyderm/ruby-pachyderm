@@ -52,7 +52,8 @@ sync:
 release:
 	@# Setup your gem credentials a la:
 	@# curl -u sean https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials; chmod 0600 ~/.gem/credentials
+	expr $$(cat BUILD) + 1 > BUILD
 	gem build pachyderm.gemspec
-	gem push pachyderm-$$(cat VERSION).gem
+	gem push pachyderm-$$(cat VERSION).$$(cat BUILD).gem
 
 .PHONY: test

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'pachyderm'
-  s.version     = File.read("VERSION")
+  s.version     = File.read("VERSION").strip + "." + File.read("BUILD").strip
   s.date        = '2018-05-31'
   s.summary     = "Client library for interacting with a Pachyderm cluster"
   s.description = "Client library for interacting with a Pachyderm cluster"
@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
   s.require_path = "lib"
   s.homepage    =
     'http://rubygems.org/gems/pachyderm'
-  s.license       = 'Apache 2.0'
+  s.license       = 'Apache-2.0'
 end
