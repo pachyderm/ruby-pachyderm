@@ -102,13 +102,12 @@ class TestClientConnection < Minitest::Test
     end
 
     def test_meta_client
-            c = Pachyderm::Client.new($address,"")
-            c.list_repo(Google::Protobuf::Empty.new).repo_info.each do |repo_info|
-                puts "Got repo: #{repo_info}\n"
-            end
-            c.list_job(Google::Protobuf::Empty.new).job_info.each do |job_info|
-                puts "Got job: #{job_info}\n"
-            end
+        delete_all
+        c = Pachyderm::Client.new($address)
+        c.create_repo(Pachyderm::Pfs::CreateRepoRequest.new(:repo=>Pachyderm::Pfs::Repo.new(:name =>"foo")))
+        assert_equal 1, c.list_repo(Google::Protobuf::Empty.new).repo_info.size
+        # It's sufficient to test the call works w/o throwing an exception:
+        assert_equal 0, c.list_job(Google::Protobuf::Empty.new).job_info.size
 
     end
 

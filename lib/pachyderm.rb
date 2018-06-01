@@ -28,7 +28,6 @@ module Pachyderm
             Pachyderm.constants.each do |sub_client_name|
                 sub_client = Pachyderm.const_get sub_client_name
                 next unless sub_client.const_defined? :API
-                puts "Initializing #{sub_client_name}\n"
                 @clients[sub_client_name] = sub_client.const_get(:API).const_get(:Stub).new(address, :this_channel_is_insecure)
             end
             @token = token
@@ -38,7 +37,6 @@ module Pachyderm
             result = nil
             @clients.each do |name, client|
                 if client.respond_to? m
-                    puts "Calling #{m} on #{name}\n"
                     result = client.send(m, *args, &block)
                 end
             end
