@@ -101,4 +101,15 @@ class TestClientConnection < Minitest::Test
 		assert_equal content, resps.first.value
     end
 
+    def test_meta_client
+            c = Pachyderm::Client.new($address,"")
+            c.list_repo(Google::Protobuf::Empty.new).repo_info.each do |repo_info|
+                puts "Got repo: #{repo_info}\n"
+            end
+            c.list_job(Google::Protobuf::Empty.new).job_info.each do |job_info|
+                puts "Got job: #{job_info}\n"
+            end
+
+    end
+
 end

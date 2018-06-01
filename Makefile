@@ -10,10 +10,14 @@ proto: docker-build-proto
 	| docker run -i pachyderm_ruby_proto \
 	| tar xf -
 
-test: 
+test-basic:
 	bundle exec ruby -I ./lib test/test.rb
+
+test-auth:
 	pachctl enterprise activate  $$(aws s3 cp s3://pachyderm-engineering/test_enterprise_activation_code.txt -)
 	bundle exec ruby -I ./lib test/auth.rb
+
+test: test-basic test-auth
 
 init:
 	git submodule update --init
@@ -48,12 +52,13 @@ sync:
 		popd
 	# Rebuild w latest proto files
 	make proto
-
-release:
-	@# Setup your gem credentials a la:
-	@# curl -u sean https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials; chmod 0600 ~/.gem/credentials
+build-gem:
 	expr $$(cat BUILD) + 1 > BUILD
 	gem build pachyderm.gemspec
+
+release-gem: build-gem
+	@# Setup your gem credentials a la:
+	@# curl -u sean https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials; chmod 0600 ~/.gem/credentials
 	gem push pachyderm-$$(cat VERSION).$$(cat BUILD).gem
 
 .PHONY: test
