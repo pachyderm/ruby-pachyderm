@@ -17,4 +17,4 @@ res.repo_info.each {|r| puts r}
 
 ```
 
-[For more examples, refer to the tests](./blob/master/test/test.rb)
+[For more examples, refer to the tests](./test/test.rb)
