@@ -101,7 +101,4 @@ class TestClientConnection < Minitest::Test
 		assert_equal content, resps.first.value
     end
 
-    def test_auth
-    end
-
 end
