@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 tar xf /dev/stdin
 
@@ -22,8 +22,10 @@ done
 for i in $(find $OUTDIR -maxdepth 7 -regex ".*pb.rb"); do
 	# Put additional 'Pachyderm' module declaration before top level modules
     sed -iE 's/^module \(.*\)$/module Pachyderm\nmodule \1/g' $i
-	# Add additional 'end' to complete the wrap
-	echo 'end' >> $i
+	# Add additional 'end' to complete the wrap, but only if the file ends w an 'end'. Hacky.
+	if [[ $(cat $i | tail -n 1 | grep end) ]]; then
+		echo 'end' >> $i
+	fi
 done
 
 find $outdir -maxdepth 5 -regex ".*pb.rb" | xargs tar cf -
