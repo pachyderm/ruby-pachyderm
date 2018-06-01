@@ -1,9 +1,4 @@
-require 'client/pfs/pfs_pb'
-require 'client/pfs/pfs_services_pb'
-require 'client/version/versionpb/version_pb'
-require 'client/version/versionpb/version_services_pb'
-require 'client/auth/auth_pb'
-require 'client/auth/auth_services_pb'
+Gem.find_files("client/**/*.rb").each { |path| require path }
 
 module Pachyderm
     class << self
