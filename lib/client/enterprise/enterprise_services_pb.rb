@@ -4,6 +4,7 @@
 require 'grpc'
 require 'client/enterprise/enterprise_pb'
 
+module Pachyderm
 module Enterprise
   module API
     class Service
@@ -30,4 +31,5 @@ module Enterprise
 
     Stub = Service.rpc_stub_class
   end
+end
 end

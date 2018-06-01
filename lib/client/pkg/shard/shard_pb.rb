@@ -79,6 +79,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Shard
   ServerState = Google::Protobuf::DescriptorPool.generated_pool.lookup("shard.ServerState").msgclass
   FrontendState = Google::Protobuf::DescriptorPool.generated_pool.lookup("shard.FrontendState").msgclass
@@ -99,4 +100,5 @@ module Shard
   SetAddresses = Google::Protobuf::DescriptorPool.generated_pool.lookup("shard.SetAddresses").msgclass
   GetAddress = Google::Protobuf::DescriptorPool.generated_pool.lookup("shard.GetAddress").msgclass
   GetShardToAddress = Google::Protobuf::DescriptorPool.generated_pool.lookup("shard.GetShardToAddress").msgclass
+end
 end

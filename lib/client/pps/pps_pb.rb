@@ -387,6 +387,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Pps
   Secret = Google::Protobuf::DescriptorPool.generated_pool.lookup("pps.Secret").msgclass
   Transform = Google::Protobuf::DescriptorPool.generated_pool.lookup("pps.Transform").msgclass
@@ -445,4 +446,5 @@ module Pps
   DatumState = Google::Protobuf::DescriptorPool.generated_pool.lookup("pps.DatumState").enummodule
   WorkerState = Google::Protobuf::DescriptorPool.generated_pool.lookup("pps.WorkerState").enummodule
   PipelineState = Google::Protobuf::DescriptorPool.generated_pool.lookup("pps.PipelineState").enummodule
+end
 end

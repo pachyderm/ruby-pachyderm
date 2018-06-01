@@ -4,6 +4,7 @@
 require 'grpc'
 require 'client/deploy/deploy_pb'
 
+module Pachyderm
 module Deploy
   module API
     class Service
@@ -19,4 +20,5 @@ module Deploy
 
     Stub = Service.rpc_stub_class
   end
+end
 end

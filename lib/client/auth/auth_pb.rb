@@ -146,6 +146,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Auth
   ActivateRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("auth.ActivateRequest").msgclass
   ActivateResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("auth.ActivateResponse").msgclass
@@ -190,4 +191,5 @@ module Auth
   GetUsersRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("auth.GetUsersRequest").msgclass
   GetUsersResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("auth.GetUsersResponse").msgclass
   Scope = Google::Protobuf::DescriptorPool.generated_pool.lookup("auth.Scope").enummodule
+end
 end

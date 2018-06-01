@@ -4,6 +4,7 @@
 require 'grpc'
 require 'client/version/versionpb/version_pb'
 
+module Pachyderm
 module Versionpb
   module API
     class Service
@@ -19,4 +20,5 @@ module Versionpb
 
     Stub = Service.rpc_stub_class
   end
+end
 end

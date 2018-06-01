@@ -16,3 +16,4 @@ end
 
 Config = Google::Protobuf::DescriptorPool.generated_pool.lookup("Config").msgclass
 ConfigV1 = Google::Protobuf::DescriptorPool.generated_pool.lookup("ConfigV1").msgclass
+end

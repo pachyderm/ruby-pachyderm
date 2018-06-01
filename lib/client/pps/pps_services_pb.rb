@@ -4,6 +4,7 @@
 require 'grpc'
 require 'client/pps/pps_pb'
 
+module Pachyderm
 module Pps
   module API
     class Service
@@ -50,4 +51,5 @@ module Pps
 
     Stub = Service.rpc_stub_class
   end
+end
 end

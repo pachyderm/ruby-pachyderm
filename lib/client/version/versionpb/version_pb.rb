@@ -13,6 +13,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Versionpb
   Version = Google::Protobuf::DescriptorPool.generated_pool.lookup("versionpb.Version").msgclass
+end
 end

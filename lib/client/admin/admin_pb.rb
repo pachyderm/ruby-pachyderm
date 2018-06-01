@@ -36,6 +36,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Admin
   Op1_7 = Google::Protobuf::DescriptorPool.generated_pool.lookup("admin.Op1_7").msgclass
   Op = Google::Protobuf::DescriptorPool.generated_pool.lookup("admin.Op").msgclass
@@ -43,4 +44,5 @@ module Admin
   ExtractPipelineRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("admin.ExtractPipelineRequest").msgclass
   RestoreRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("admin.RestoreRequest").msgclass
   ClusterInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("admin.ClusterInfo").msgclass
+end
 end

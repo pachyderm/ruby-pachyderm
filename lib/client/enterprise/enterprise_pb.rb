@@ -36,6 +36,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Enterprise
   EnterpriseRecord = Google::Protobuf::DescriptorPool.generated_pool.lookup("enterprise.EnterpriseRecord").msgclass
   TokenInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("enterprise.TokenInfo").msgclass
@@ -46,4 +47,5 @@ module Enterprise
   DeactivateRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("enterprise.DeactivateRequest").msgclass
   DeactivateResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("enterprise.DeactivateResponse").msgclass
   State = Google::Protobuf::DescriptorPool.generated_pool.lookup("enterprise.State").enummodule
+end
 end

@@ -7,5 +7,7 @@ require 'google/protobuf/empty_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
 end
 
+module Pachyderm
 module Health
+end
 end

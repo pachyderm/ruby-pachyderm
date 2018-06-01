@@ -11,7 +11,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Deploy
   DeployStorageSecretRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("deploy.DeployStorageSecretRequest").msgclass
   DeployStorageSecretResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("deploy.DeployStorageSecretResponse").msgclass
+end
 end

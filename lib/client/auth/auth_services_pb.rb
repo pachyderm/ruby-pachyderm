@@ -4,6 +4,7 @@
 require 'grpc'
 require 'client/auth/auth_pb'
 
+module Pachyderm
 module Auth
   module API
     class Service
@@ -41,4 +42,5 @@ module Auth
 
     Stub = Service.rpc_stub_class
   end
+end
 end

@@ -4,6 +4,7 @@
 require 'grpc'
 require 'client/health/health_pb'
 
+module Pachyderm
 module Health
   module Health
     class Service
@@ -19,4 +20,5 @@ module Health
 
     Stub = Service.rpc_stub_class
   end
+end
 end

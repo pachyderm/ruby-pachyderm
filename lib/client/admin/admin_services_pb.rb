@@ -4,6 +4,7 @@
 require 'grpc'
 require 'client/admin/admin_pb'
 
+module Pachyderm
 module Admin
   module API
     class Service
@@ -22,4 +23,5 @@ module Admin
 
     Stub = Service.rpc_stub_class
   end
+end
 end

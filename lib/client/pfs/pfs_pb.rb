@@ -294,6 +294,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
+module Pachyderm
 module Pfs
   Repo = Google::Protobuf::DescriptorPool.generated_pool.lookup("pfs.Repo").msgclass
   Branch = Google::Protobuf::DescriptorPool.generated_pool.lookup("pfs.Branch").msgclass
@@ -360,4 +361,5 @@ module Pfs
   FileType = Google::Protobuf::DescriptorPool.generated_pool.lookup("pfs.FileType").enummodule
   CommitState = Google::Protobuf::DescriptorPool.generated_pool.lookup("pfs.CommitState").enummodule
   Delimiter = Google::Protobuf::DescriptorPool.generated_pool.lookup("pfs.Delimiter").enummodule
+end
 end
