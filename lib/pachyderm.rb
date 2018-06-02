@@ -35,6 +35,14 @@ module Pachyderm
             @token = token
         end
 
+        # The one 'sugar' method we provide, since it needs to make a call
+        # to both Pfs + Pps
+        def delete_all
+		    req = Google::Protobuf::Empty.new
+            @clients[:Pfs].delete_all(req)
+            @clients[:Pps].delete_all(req)
+        end
+
         def method_missing(m, *args, &block)
             result = nil
             method_found = false

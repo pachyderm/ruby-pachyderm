@@ -5,18 +5,13 @@ $address = "127.0.0.1:30650"
 
 class TestClientConnection < Minitest::Test
     def setup
+		@client = Pachyderm::Client.new($address)
+        @client.delete_all
     end
 
-	def delete_all
-		client = Pachyderm::Pfs::API::Stub.new($address, :this_channel_is_insecure)
-		req = Google::Protobuf::Empty.new
-		client.delete_all(req)
-	end	
-
     def test_cluster_connection
-		client = Pachyderm::Versionpb::API::Stub.new($address, :this_channel_is_insecure)
 		req = Google::Protobuf::Empty.new
-		resp = client.get_version(req)
+		resp = @client.get_version(req)
 		version = "#{resp.major}.#{resp.minor}.#{resp.micro}"
 		unless resp.additional == ""
 			version += "#{resp.additional}"
@@ -26,31 +21,25 @@ class TestClientConnection < Minitest::Test
     end
 
     def test_unary_response
-		delete_all
-		client = Pachyderm::Pfs::API::Stub.new($address, :this_channel_is_insecure)
 		req = Pachyderm::Pfs::CreateRepoRequest.new(:repo=>Pachyderm::Pfs::Repo.new(:name =>"foo"))
-		client.create_repo(req)
+		@client.create_repo(req)
 		req = Pachyderm::Pfs::ListRepoRequest.new()
-		resp = client.list_repo(req)
+		resp = @client.list_repo(req)
 		assert_equal 1, resp.repo_info.size
 		assert_equal "foo", resp.repo_info.first.repo.name
     end
 
 	def test_empty_request
-		delete_all
-		client = Pachyderm::Pfs::API::Stub.new($address, :this_channel_is_insecure)
 		req = Pachyderm::Pfs::ListRepoRequest.new()
-		resp = client.list_repo(req)
+		resp = @client.list_repo(req)
 		assert_equal 0, resp.repo_info.size
 	end
 
     def test_error_response
-		delete_all
-		client = Pachyderm::Pfs::API::Stub.new($address, :this_channel_is_insecure)
 		req = Pachyderm::Pfs::CreateRepoRequest.new(:repo=>Pachyderm::Pfs::Repo.new(:name=>"foo_#%@#^"))
 		err = nil
 		begin
-			client.create_repo(req)
+			@client.create_repo(req)
 		rescue GRPC::Unknown => e
 			err = e
 		end
@@ -58,18 +47,16 @@ class TestClientConnection < Minitest::Test
     end
 
     def test_streaming_calls
-		delete_all
-		client = Pachyderm::Pfs::API::Stub.new($address, :this_channel_is_insecure)
 		repo_name = "foo"
 		content = "yabba dabba doo"
 
 		# Create some content in a commit
 		req = Pachyderm::Pfs::CreateRepoRequest.new(:repo=>Pachyderm::Pfs::Repo.new(:name =>repo_name))
-		client.create_repo(req)
+		@client.create_repo(req)
 		repo = Pachyderm::Pfs::Repo.new(:name =>repo_name)
 		path = "/bar"
 	
-		commit = client.start_commit(Pachyderm::Pfs::StartCommitRequest.new(
+		commit = @client.start_commit(Pachyderm::Pfs::StartCommitRequest.new(
 			:branch => "master",
 			:parent => Pachyderm::Pfs::Commit.new(
 				:repo => repo,
@@ -83,9 +70,9 @@ class TestClientConnection < Minitest::Test
 			),
 			:value => content
 		)
-		client.put_file([req].each)
+		@client.put_file([req].each)
 
-		client.finish_commit(Pachyderm::Pfs::FinishCommitRequest.new(
+		@client.finish_commit(Pachyderm::Pfs::FinishCommitRequest.new(
 			:commit => commit
 		))
 
@@ -95,20 +82,17 @@ class TestClientConnection < Minitest::Test
 				:path => path
 			)
 		)
-		resps = client.get_file(req)
+		resps = @client.get_file(req)
 		resps = resps.collect {|i| i}
 		assert_equal 1, resps.size
 		assert_equal content, resps.first.value
     end
 
     def test_meta_client
-        delete_all
-        c = Pachyderm::Client.new($address, " ")
-        c.create_repo(Pachyderm::Pfs::CreateRepoRequest.new(:repo=>Pachyderm::Pfs::Repo.new(:name =>"foo")))
-        assert_equal 1, c.list_repo(Google::Protobuf::Empty.new).repo_info.size
+        @client.create_repo(Pachyderm::Pfs::CreateRepoRequest.new(:repo=>Pachyderm::Pfs::Repo.new(:name =>"foo")))
+        assert_equal 1, @client.list_repo(Google::Protobuf::Empty.new).repo_info.size
         # It's sufficient to test the call works w/o throwing an exception:
-        assert_equal 0, c.list_job(Google::Protobuf::Empty.new).job_info.size
-
+        assert_equal 0, @client.list_job(Google::Protobuf::Empty.new).job_info.size
     end
 
 end

@@ -19,7 +19,6 @@ class TestClientConnection < Minitest::Test
 		# Activate auth w an admin
 		name="robot:admin"
 		req = Pachyderm::Auth::ActivateRequest.new(:subject=>name)
-        puts "activate request: #{req}\n"
 		res = client.activate(req)
 		token = res.pach_token
 
