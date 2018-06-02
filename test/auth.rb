@@ -6,7 +6,7 @@ $address = "127.0.0.1:30650"
 class TestClientConnection < Minitest::Test
 
     def test_auth
-		client = Pachyderm::Auth::API::Stub.new($address, :this_channel_is_insecure)
+		client = Pachyderm::Client.new($address)
 
 		# Negative control - can't list admins prior to enabling auth
 		e = nil
@@ -19,6 +19,7 @@ class TestClientConnection < Minitest::Test
 		# Activate auth w an admin
 		name="robot:admin"
 		req = Pachyderm::Auth::ActivateRequest.new(:subject=>name)
+        puts "activate request: #{req}\n"
 		res = client.activate(req)
 		token = res.pach_token
 
@@ -32,8 +33,8 @@ class TestClientConnection < Minitest::Test
 		end	
 
 		# Positive control - should be able to list admins
-		metadata = Pachyderm::metadata(token)
-		res = client.get_admins(Pachyderm::Auth::GetAdminsRequest.new, metadata)
+        authenticated_client = Pachyderm::Client.new($address, token)
+		res = authenticated_client.get_admins(Pachyderm::Auth::GetAdminsRequest.new)
 		refute_equal 0, res.admins.size
     end
 

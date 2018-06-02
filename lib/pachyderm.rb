@@ -14,12 +14,6 @@ module Pachyderm
 			return true
 		end
 
-		def metadata(token)
-			# The 'authn-token' is a keyname hardcoded at:
-			# https://github.com/pachyderm/pachyderm/blob/master/src/client/auth/auth.go#L14
-			# TODO - as part of the 'make sync' build task, pull in this value
-			{:metadata => {'authn-token' => token}}
-		end
     end
 
     class Client
@@ -34,13 +28,34 @@ module Pachyderm
         end
 
         def method_missing(m, *args, &block)
+            puts "method_missing called for #{m} w args #{args}\n"
             result = nil
+            method_found = false
+            puts "iterating over clients:\n"
+            puts @clients
             @clients.each do |name, client|
                 if client.respond_to? m
+                    method_found = true
+                    puts "args before auth:"
+                    puts args
+                    puts args.class
+                    args << metadata unless @token.nil?
+                    puts "args after auth:"
+                    puts args
+                    puts args.class
                     result = client.send(m, *args, &block)
+                    break
                 end
             end
+            raise Exception.new("method #{m} not found") unless method_found
             result
         end
+
+		def metadata()
+			# The 'authn-token' is a keyname hardcoded at:
+			# https://github.com/pachyderm/pachyderm/blob/master/src/client/auth/auth.go#L14
+			# TODO - as part of the 'make sync' build task, pull in this value
+			{:metadata => {'authn-token' => @token}}
+		end
     end
 end

@@ -103,7 +103,7 @@ class TestClientConnection < Minitest::Test
 
     def test_meta_client
         delete_all
-        c = Pachyderm::Client.new($address)
+        c = Pachyderm::Client.new($address, " ")
         c.create_repo(Pachyderm::Pfs::CreateRepoRequest.new(:repo=>Pachyderm::Pfs::Repo.new(:name =>"foo")))
         assert_equal 1, c.list_repo(Google::Protobuf::Empty.new).repo_info.size
         # It's sufficient to test the call works w/o throwing an exception:
