@@ -19,7 +19,15 @@ module Pachyderm
     class Client
         def initialize(address, token=nil)
             @clients = {}
-            Pachyderm.constants.each do |sub_client_name|
+            clients = Pachyderm.constants
+            # Omit the enterprise client
+            # It has a collision w the 'auth.activate' call
+            # and really you only use enterprise to administrate, and 
+            # make that activate call once
+            # And. If you really need to call it via the ruby client,
+            # you can do so explicitly a la `Pachyderm::Enterprise::API::Stub.new ...`
+            clients.delete(:Enterprise)
+            clients.each do |sub_client_name|
                 sub_client = Pachyderm.const_get sub_client_name
                 next unless sub_client.const_defined? :API
                 @clients[sub_client_name] = sub_client.const_get(:API).const_get(:Stub).new(address, :this_channel_is_insecure)
@@ -28,23 +36,13 @@ module Pachyderm
         end
 
         def method_missing(m, *args, &block)
-            puts "method_missing called for #{m} w args #{args}\n"
             result = nil
             method_found = false
-            puts "iterating over clients:\n"
-            puts @clients
             @clients.each do |name, client|
                 if client.respond_to? m
                     method_found = true
-                    puts "args before auth:"
-                    puts args
-                    puts args.class
                     args << metadata unless @token.nil?
-                    puts "args after auth:"
-                    puts args
-                    puts args.class
                     result = client.send(m, *args, &block)
-                    break
                 end
             end
             raise Exception.new("method #{m} not found") unless method_found
