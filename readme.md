@@ -1,9 +1,19 @@
-# Ruby Pachyderm
+# Ruby Pachyderm Client
 
-Ruby Pachyderm Client
 
-A ruby client wrapper for the Pachyderm_ API.
+A ruby client wrapper for the Pachyderm API
 
+## Example Installation
+
+```
+$ gem install pachyderm
+```
+
+[The gem is hosted on rubygems](https://rubygems.org/gems/pachyderm)
+
+The `Major.Minor.Point.Micro` versioning is aligned with versioned releases of [Pachyderm](http://github.com/pachyderm/pachyderm/releases).
+
+So version `1.7.3.9` of this gem, was built against version `1.7.3` of the Pachyderm API (proto / grpc definitions).
 
 ## Example Usage
 
