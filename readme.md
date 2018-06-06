@@ -3,6 +3,8 @@
 
 A ruby client wrapper for the Pachyderm API
 
+[CI Builds](https://travis-ci.org/pachyderm/ruby-pachyderm/builds)
+
 ## Example Installation
 
 ```
