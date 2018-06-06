@@ -11,4 +11,8 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://rubygems.org/gems/pachyderm'
   s.license       = 'Apache-2.0'
+
+  s.add_dependency "google-protobuf"
+  s.add_dependency "grpc"
+
 end
